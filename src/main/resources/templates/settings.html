@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Settings</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #f3f3d6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border: 2px solid #000000;
+            box-shadow: 4px 4px 0 #000000;
+            width: 300px;
+            text-align: center;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .back-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #ffffff;
+            border: 2px solid #000000;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .back-button::before {
+            content: '';
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-top: 2px solid #000000;
+            border-left: 2px solid #000000;
+            transform: rotate(-45deg);
+        }
+        .back-button:hover {
+            background-color: #000000;
+        }
+        .back-button:hover::before {
+            border-color: #ffffff;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #ffffff;
+            border: 2px solid #000000;
+            font-family: 'Courier New', Courier, monospace;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            margin-bottom: 10px;
+        }
+        button:hover {
+            background-color: #000000;
+            color: #ffffff;
+        }
+        #fileInput {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<a th:href="@{/profile}" class="back-button"></a>
+<div class="container">
+    <h1>Settings</h1>
+    <input type="file" id="fileInput" accept="image/*">
+    <button type="button" id="changeProfileImageButton">Change Profile Image</button>
+</div>
+
+<script>
+    document.getElementById('changeProfileImageButton').addEventListener('click', function() {
+        document.getElementById('fileInput').click();
+    });
+
+    document.getElementById('fileInput').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const formData = new FormData();
+            formData.append('file', file);
+
+            fetch('/setImage', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.text(); // или response.json() если ответ в формате JSON
+                    } else {
+                        throw new Error('Failed to upload image');
+                    }
+                })
+                .then(data => {
+                    alert(data); // Выводит сообщение от сервера
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Failed to update profile image');
+                });
+        }
+    });
+</script>
+</body>
+</html>
