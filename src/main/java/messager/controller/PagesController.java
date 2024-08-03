@@ -37,18 +37,6 @@ public class PagesController {
         return "registration";
     }
 
-
-    @PostMapping("/registration")
-    public String registration(@RequestParam String username, @RequestParam String password) {
-        try {
-            userService.registration(username, password);
-        } catch (Exception e) {
-            return "registrationFail";
-        }
-        return "registrationSuccess";
-    }
-
-
     @GetMapping("/logout")
     public String logout() {
         return "logout";

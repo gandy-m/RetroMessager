@@ -24,14 +24,15 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public User registration(String username, String password) throws Exception {
-        if (!username.isEmpty() && !password.isEmpty()) {
-            if (userRepository.findUserByUsername(username).isEmpty()) {
+        if (userRepository.findUserByUsername(username).isEmpty()) {
+            if (password.length() >= 6){
                 User user = new User(username, passwordEncoder.encode(password));
                 userRepository.save(user);
                 return user;
             }
+            throw new Exception("Password must be at least 6 characters long");
         }
-        throw new Exception();
+        throw new Exception("Username taken. Try another name.");
     }
 
     @Transactional
@@ -52,8 +53,7 @@ public class UserServiceImpl implements UserService {
             user = userRepository.findUserByUsername(username).get();
             user.setImage(file.getBytes());
             userRepository.save(user);
-        }
-        else {
+        } else {
             throw new IOException();
         }
     }
