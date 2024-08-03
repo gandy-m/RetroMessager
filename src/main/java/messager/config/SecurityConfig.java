@@ -50,7 +50,7 @@ public class SecurityConfig {
                 .formLogin(formLogin ->
                         formLogin
                                 .loginPage("/login")
-                                .defaultSuccessUrl("/springmessager")
+                                .defaultSuccessUrl("/messager")
                                 .permitAll()
                 ).logout(logout -> logout
                         .logoutUrl("/custom-logout")

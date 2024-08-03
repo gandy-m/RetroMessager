@@ -38,5 +38,4 @@ public class User {
         role = "ROLE_USER";
     }
 
-
 }

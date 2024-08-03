@@ -23,14 +23,6 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public User add(String username, String password) {
-        User user = new User(username, password);
-        userRepository.save(user);
-        return user;
-    }
-
-    @Transactional
-    @Override
     public User registration(String username, String password) throws Exception {
         if (!username.isEmpty() && !password.isEmpty()) {
             if (userRepository.findUserByUsername(username).isEmpty()) {

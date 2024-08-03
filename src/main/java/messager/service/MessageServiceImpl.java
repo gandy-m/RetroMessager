@@ -32,29 +32,4 @@ public class MessageServiceImpl implements MessageService {
     }
 
 
-    @Override
-    public void addMessage(MessageDTO messageDTO) {
-        Message message = MessageMapper.INSTANCE.messageDTOToMessage(messageDTO);
-        messageRepository.save(message);
-    }
-
-
-    @Override
-    public LinkedList<Message> getMessagesByChatId(long chatId) {
-        return messageRepository.getMessagesByChatId(chatId);
-    }
-
-
-    @Override
-    public LinkedList<MessageDTO> getMessageDTOsByChatId(long chatId) {
-        LinkedList<Message> messageList = messageRepository.getMessagesByChatId(chatId);
-        LinkedList<MessageDTO> messageDTOList = new LinkedList<>();
-        for (Message m : messageList) {
-            MessageDTO messageDTO = MessageMapper.INSTANCE.messageToMessageDTO(m);
-            messageDTOList.add(messageDTO);
-        }
-        return messageDTOList;
-    }
-
-
 }

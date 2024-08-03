@@ -56,7 +56,7 @@ function connect() {
 
 async function fetchUsername() {
     const response = await fetch('/getUsername', {
-        method: 'POST',
+        method: 'GET',
         headers: {
             'Content-Type': 'application/json'
         }

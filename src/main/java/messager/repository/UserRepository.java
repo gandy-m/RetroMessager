@@ -16,9 +16,4 @@ public interface UserRepository extends CrudRepository<User, Long> {
    @Transactional
    Optional<User> findUserByUsername(String username);
 
-   @Transactional
-   @Query(value = "select * from users where id=:id", nativeQuery = true)
-   User findUserById(long id);
-
-
 }

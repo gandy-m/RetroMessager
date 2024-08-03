@@ -38,8 +38,8 @@ public class MainController {
     private final SimpMessagingTemplate simpMessagingTemplate;
 
 
-    @GetMapping("/showChatList")
-    public ResponseEntity<List<ChatDTO>> showChatList(Principal principal) {
+    @GetMapping("/getChatList")
+    public ResponseEntity<List<ChatDTO>> getChatList(Principal principal) {
         List<ChatDTO> chatDTOList = chatService.getChatDTOsByUsername(principal.getName());
         return ResponseEntity.ok(chatDTOList);
     }
@@ -66,13 +66,13 @@ public class MainController {
     }
 
 
-    @GetMapping("/openchat/{chatname}")
+    @GetMapping("/getChat/{chatname}")
     public ResponseEntity<ChatDTO> getChatDTO(@PathVariable String chatname, Principal principal) {
         return ResponseEntity.ok(ChatMapper.INSTANCE.chatToChatDTO(chatService.getChat(principal.getName(), chatname)));
     }
 
 
-    @MessageMapping("/sendMessage/{chatname}")
+    @MessageMapping("/addMessage/{chatname}")
     public void addMessage(@DestinationVariable String chatname, String text, Principal principal) {
         System.out.println("addMessage");
         String recipientUsername;
@@ -94,7 +94,7 @@ public class MainController {
     }
 
 
-    @PostMapping("/getUsername")
+    @GetMapping("/getUsername")
     public String getUsername(Principal principal) {
         return principal.getName();
     }

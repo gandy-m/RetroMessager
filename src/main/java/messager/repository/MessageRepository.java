@@ -10,8 +10,4 @@ import java.util.LinkedList;
 @Repository
 public interface MessageRepository extends CrudRepository <Message,Long>{
 
-
-   LinkedList<Message> getMessagesByChatId(Long chatId);
-
-
 }

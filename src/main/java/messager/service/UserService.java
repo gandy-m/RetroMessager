@@ -12,9 +12,6 @@ import java.util.List;
 public interface UserService {
 
 
-   User add(String username, String password);
-
-
    User find(String username);
 
 

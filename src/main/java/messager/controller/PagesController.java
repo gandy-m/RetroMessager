@@ -20,7 +20,7 @@ public class PagesController {
     private final UserService userService;
 
 
-    @GetMapping("/springmessager")
+    @GetMapping("/messager")
     public String retroMessager() {
         return "springmessager";
     }

@@ -4,7 +4,7 @@ function chatButtonOnClick(buttonText) {
         subscribeOnChat.unsubscribe();
     }
     subscribe = 1;
-    fetch("/openchat/" + buttonText)
+    fetch("/getChat/" + buttonText)
         .then(response => {
             if (!response.ok) {
                 throw new Error("HTTP error " + response.status);
@@ -72,7 +72,7 @@ function sendMessage(event) {
     event.preventDefault();
     if (writeMessageInput.value) {
         if (writeMessageInput.value.trim().length > 0) {
-            stompClient.send("/app/sendMessage/" + chatname ,{}, writeMessageInput.value.trim());
+            stompClient.send("/app/addMessage/" + chatname ,{}, writeMessageInput.value.trim());
             writeMessageInput.value = '';
         }
     }
@@ -80,7 +80,7 @@ function sendMessage(event) {
 
 
 function getChatList() {
-    fetch("/showChatList")
+    fetch("/getChatList")
         .then(response => response.json())
         .then(data => {
             data.forEach(function (chatDTO) {
