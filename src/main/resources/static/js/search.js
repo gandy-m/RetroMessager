@@ -1,4 +1,4 @@
-function sendFindUserRequest(event) {
+function findUser(event) {
    event.preventDefault();
    var request = searchUserInput.value.trim();
    if (request) {
@@ -6,35 +6,32 @@ function sendFindUserRequest(event) {
          method: 'POST'
       })
           .then(response => response.json())
-          .then(result => showFindUser(result))
-          .catch(error => console.error('Ошибка:', error));
+          .then(userDTO => {
+             if (userDTO) {
+                resultsSearchButton.style.display = 'block';
+                resultsSearchButton.style.pointerEvents = 'auto';
+                document.addEventListener('click', deletePopUp);
+                resultsSearchButton.textContent = userDTO.username + " | ADD TO FRIENDS";
+             } else {
+                resultsSearchButton.textContent = 'SEARCH ERROR';
+             }
+          })
+          .catch(error => {
+             console.error('Ошибка:', error)
+          });
    }
 }
-
-
-function showFindUser(userDTO) {
-   if (userDTO) {
-      resultsSearchButton.style.display = 'block';
-      resultsSearchButton.style.pointerEvents = 'auto';
-      document.addEventListener('click', deletePopUp);
-      resultsSearchButton.textContent = userDTO.username + " | ADD TO FRIENDS";
-   } else {
-      resultsSearchButton.textContent = 'SEARCH ERROR';
-   }
-}
-
 
 function deletePopUp(event) {
+   let isClickOnContainer = document.getElementById('container').contains(event.target)
    let isClickInsideInput = searchUserInput.contains(event.target);
    let isClickInsideButton = resultsSearchButton.contains(event.target);
-   let isClickInsideAreaBetween = leftContainer.contains(event.target);
-   if (!isClickInsideInput && !isClickInsideButton && !isClickInsideAreaBetween) {
-      buttonOnHidden();
+   if (!isClickInsideInput || !isClickInsideButton || isClickOnContainer) {
+      hideButton();
    }
 }
 
-
-function buttonOnHidden() {
+function hideButton() {
    resultsSearchButton.style.display = 'none';
    resultsSearchButton.style.pointerEvents = 'none';
    document.removeEventListener('click', deletePopUp);

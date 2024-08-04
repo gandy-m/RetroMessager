@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 
 @RequiredArgsConstructor
@@ -60,9 +61,12 @@ public class MainController {
 
 
     @PostMapping("/addchat/{friendname}")
-    public ResponseEntity<ChatDTO> addChat(@PathVariable String friendname, Principal principal) {
-        Chat chat = chatService.addChat(principal.getName(), friendname);
-        return ResponseEntity.ok(ChatMapper.INSTANCE.chatToChatDTO(chat));
+    public ResponseEntity<?> addChat(@PathVariable String friendname, Principal principal) {
+        if (chatService.getChat(principal.getName(), friendname) == null) {
+            Chat chat = chatService.addChat(principal.getName(), friendname);
+            return ResponseEntity.ok(ChatMapper.INSTANCE.chatToChatDTO(chat));
+        }
+        return null;
     }
 
 

@@ -3,12 +3,9 @@ package messager.controller;
 
 import lombok.RequiredArgsConstructor;
 import messager.service.UserService;
-import messager.service.UserServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 
@@ -22,7 +19,7 @@ public class PagesController {
 
     @GetMapping("/messager")
     public String retroMessager() {
-        return "springmessager";
+        return "main";
     }
 
 
