@@ -72,6 +72,20 @@
         #fileInput {
             display: none;
         }
+        .password-form {
+            display: none;
+            margin-top: 10px;
+        }
+        .password-form input {
+            width: calc(100% - 24px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 2px solid #000000;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .password-form button {
+            width: 100%;
+        }
     </style>
 </head>
 <body>
@@ -80,6 +94,11 @@
     <h1>Settings</h1>
     <input type="file" id="fileInput" accept="image/*">
     <button type="button" id="changeProfileImageButton">Change Profile Image</button>
+    <button type="button" id="changePasswordButton">Change Password</button>
+    <form class="password-form" id="passwordForm">
+        <input type="password" id="newPassword" name="newPassword" placeholder="New Password" required>
+        <button type="button" id="submitPassword">Submit</button>
+    </form>
 </div>
 
 <script>
@@ -111,6 +130,41 @@
                     console.error('Error:', error);
                     alert('Failed to update profile image');
                 });
+        }
+    });
+
+    document.getElementById('changePasswordButton').addEventListener('click', function() {
+        const passwordForm = document.getElementById('passwordForm');
+        if (passwordForm.style.display === 'none') {
+            passwordForm.style.display = 'block';
+        } else {
+            passwordForm.style.display = 'none';
+        }
+    });
+
+    document.getElementById('submitPassword').addEventListener('click', function() {
+        const newPassword = document.getElementById('newPassword').value;
+        if (newPassword) {
+            fetch('/setPassword/' + newPassword, {
+                method: 'POST'
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.text(); // или response.json() если ответ в формате JSON
+                    } else {
+                        throw new Error('Failed to change password');
+                    }
+                })
+                .then(data => {
+                    alert(data); // Выводит сообщение от сервера
+                    document.getElementById('passwordForm').style.display = 'none';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Failed to change password');
+                });
+        } else {
+            alert('Please enter a new password');
         }
     });
 </script>

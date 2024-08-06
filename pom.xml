@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>messager</groupId>
-    <artifactId>springMessager</artifactId>
+    <artifactId>RetroMessager</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>springMessager</name>
     <description>springMessager</description>

@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User registration(String username, String password) throws Exception {
         if (userRepository.findUserByUsername(username).isEmpty()) {
-            if (password.length() >= 6){
+            if (password.length() >= 6) {
                 User user = new User(username, passwordEncoder.encode(password));
                 userRepository.save(user);
                 return user;
@@ -47,6 +47,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Transactional
+    @Override
     public void setImage(MultipartFile file, String username) throws IOException {
         User user;
         if (userRepository.findUserByUsername(username).isPresent()) {
@@ -57,4 +58,18 @@ public class UserServiceImpl implements UserService {
             throw new IOException();
         }
     }
+
+
+    @Transactional
+    @Override
+    public void setPassword(String password, String username) throws Exception {
+        if (password.length() >= 6) {
+            User user = userRepository.findUserByUsername(username).get();
+            user.setPassword(passwordEncoder.encode(password));
+            userRepository.save(user);
+        } else {
+            throw new Exception("Password must be at least 6 characters long");
+        }
+    }
+
 }
