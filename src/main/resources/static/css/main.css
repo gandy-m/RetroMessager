@@ -206,13 +206,14 @@ body {
     border: 2px solid #000000;
     border-radius: 20px;
     position: static;
-    width: 100%;
+    width: calc(100% - 50px);
     height: 45px;
-    margin-top: 5px;
     background-color: #ffffff;
     cursor: pointer;
     font-family: 'Courier New', Courier, monospace;
     transition: background-color 0.3s, color 0.3s;
+    padding-left: 45px;
+    box-sizing: border-box;
 }
 
 .friendButton:hover {
@@ -295,14 +296,14 @@ body {
 .chat-image {
     width: 45px;
     height: 45px;
-    border-radius: 40%;
-    border: 2px solid #000000;
+    border-radius: 50%;
+    border: 1px solid #000000;
     background-color: #ffffff;
     position: absolute;
-    display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    right: 0;
 }
 .chat-image img {
     width: 100%;

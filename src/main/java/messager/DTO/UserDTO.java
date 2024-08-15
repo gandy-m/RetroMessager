@@ -10,9 +10,6 @@ import lombok.*;
 @Setter
 public class UserDTO {
 
-   private byte[] image;
-
-
    private String username;
 
 

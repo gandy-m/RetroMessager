@@ -40,7 +40,7 @@ function openChat(buttonText) {
         })
         .catch(error => {
             console.error("Ошибка при выполнении запроса:", error);
-});
+        });
 }
 
 function getChatList() {
@@ -59,8 +59,7 @@ function getChatList() {
 function addChat(event) {
     event.preventDefault()
     let content = resultsSearchButton.textContent;
-    let chatname =  content.split('| ADD TO')[0].trim();
-    console.log(chatname)
+    let chatname = content.split('| ADD TO')[0].trim();
     fetch("/addchat/" + chatname, {
         method: 'POST'
     })
@@ -76,8 +75,15 @@ function showChat(chatDTO) {
         let friendUl = document.getElementById('friendUl');
         let friendLi = document.createElement('li');
         let chatButton = document.createElement('button');
+        let chatImageA = document.createElement('a');
+        let chatImage = document.createElement('img');
+        chatImageA.href = "/profile";
+        chatImageA.appendChild(chatImage);
+        friendLi.appendChild(chatImageA);
         friendLi.appendChild(chatButton);
         friendUl.appendChild(friendLi);
+        chatImageA.classList.add('chat-image');
+        chatImage.classList.add('chat-image');
         chatButton.classList.add('friendButton');
         friendLi.classList.add('friendLi');
         chatButton.setAttribute('id', 'friendButton');
@@ -87,9 +93,16 @@ function showChat(chatDTO) {
         } else {
             content = chatDTO.user1DTO.username;
         }
+        showChatImg(content, chatImage);
         chatButton.innerText = content;
         chatButton.addEventListener('click', function () {
             openChat(this.innerText);
         });
     }
+}
+
+function showChatImg(chatname, chatImage) {
+    fetch("/getChatImage/" + chatname)
+        .then(response => response.blob())
+        .then(blob => chatImage.src = URL.createObjectURL(blob));
 }

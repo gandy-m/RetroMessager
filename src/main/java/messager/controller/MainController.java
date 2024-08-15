@@ -14,6 +14,8 @@ import messager.model.User;
 import messager.service.ChatService;
 import messager.service.MessageService;
 import messager.service.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -103,4 +105,15 @@ public class MainController {
         return principal.getName();
     }
 
+
+    @GetMapping("/getChatImage/{chatname}")
+    public ResponseEntity<byte[]> getChatImage(@PathVariable String chatname) {
+        User user = userService.find(chatname);
+        if (user.getImage() != null) {
+            return ResponseEntity.ok()
+                    .contentType(MediaType.IMAGE_JPEG)
+                    .body(user.getImage());
+        }
+        return null;
+    }
 }
