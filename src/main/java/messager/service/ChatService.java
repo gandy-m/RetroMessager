@@ -22,4 +22,7 @@ public interface ChatService {
 
 
    List<ChatDTO> getChatDTOsByUsername(String name);
+
+
+   void removeChat(String username, String friendname);
 }

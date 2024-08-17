@@ -14,6 +14,7 @@
             align-items: center;
             height: 100vh;
         }
+
         .container {
             background-color: #ffffff;
             padding: 20px;
@@ -22,10 +23,12 @@
             width: 300px;
             text-align: center;
         }
+
         h1 {
             text-align: center;
             margin-bottom: 20px;
         }
+
         .profile-image {
             width: 200px;
             height: 200px;
@@ -34,10 +37,12 @@
             margin: 0 auto 20px;
             display: block;
         }
+
         .username {
             font-size: 1.5em;
             margin-bottom: 20px;
         }
+
         .back-button {
             position: absolute;
             top: 10px;
@@ -52,6 +57,7 @@
             justify-content: center;
             align-items: center;
         }
+
         .back-button::before {
             content: '';
             display: inline-block;
@@ -61,12 +67,15 @@
             border-left: 2px solid #000000;
             transform: rotate(-45deg);
         }
+
         .back-button:hover {
             background-color: #000000;
         }
+
         .back-button:hover::before {
             border-color: #ffffff;
         }
+
         button {
             width: 100%;
             padding: 10px;
@@ -77,6 +86,7 @@
             transition: background-color 0.3s, color 0.3s;
             margin-bottom: 10px;
         }
+
         button:hover {
             background-color: #000000;
             color: #ffffff;
@@ -88,12 +98,7 @@
 <div class="container">
     <img class="profile-image" id="profile-image">
     <div class="username" id="usernameButton">Username</div>
-    <a th:href="@{/settings}">
-        <button type="button">Settings</button>
-    </a>
-    <a th:href="@{/logout}">
-        <button type="button">Logout</button>
-    </a>
+    <button id="friendButton">Add Friend</button>
     <script>
         const pathname = window.location.pathname;
         const parts = pathname.split('/');
@@ -101,12 +106,48 @@
         document.getElementById('usernameButton').innerText = username;
 
         const imageElement = document.getElementById('profile-image');
-        fetch(`/getImage`)
+        fetch(`/getImage/` + username)
             .then(response => response.blob())
             .then(blob => {
                 const imageUrl = URL.createObjectURL(blob);
                 imageElement.src = imageUrl;
             });
+
+        const friendButton = document.getElementById('friendButton');
+
+        fetch(`/checkFriend/` + username, {
+            method: 'POST'
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data === 1) {
+                    friendButton.innerText = 'Remove Friend';
+                } else {
+                    friendButton.innerText = 'Add Friend';
+                }
+            });
+
+        friendButton.addEventListener('click', () => {
+            const username = document.getElementById('usernameButton').innerText;
+            const url = friendButton.innerText === 'Remove Friend' ? `/removeFriend/${username}` : `/addFriend/${username}`;
+
+            fetch(url, {
+                method: 'POST'
+            })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                    if (friendButton.innerText === 'Remove Friend') {
+                        friendButton.innerText = 'Add Friend';
+                    } else {
+                        friendButton.innerText = 'Remove Friend';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred');
+                });
+        });
     </script>
 </div>
 </body>

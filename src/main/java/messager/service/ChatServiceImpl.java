@@ -56,5 +56,10 @@ public class ChatServiceImpl implements ChatService {
         return chat;
     }
 
-
+    @Transactional
+    @Override
+    public void removeChat(String username, String friendname) {
+       Chat chat = chatRepository.getChatByMembersNames(username, friendname);
+       chatRepository.delete(chat);
+    }
 }

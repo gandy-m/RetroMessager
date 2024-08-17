@@ -94,6 +94,7 @@ function showChat(chatDTO) {
             content = chatDTO.user1DTO.username;
         }
         showChatImg(content, chatImage);
+        chatImageA.href = "/profile/" + content;
         chatButton.innerText = content;
         chatButton.addEventListener('click', function () {
             openChat(this.innerText);

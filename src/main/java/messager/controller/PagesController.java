@@ -1,20 +1,14 @@
 package messager.controller;
 
 
-import lombok.RequiredArgsConstructor;
-import messager.service.UserService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.security.Principal;
 
-@RequiredArgsConstructor
 @Controller
 public class PagesController {
-
-
-    private final UserService userService;
 
 
     @GetMapping("/messager")
@@ -40,10 +34,12 @@ public class PagesController {
     }
 
 
-    @GetMapping("/profile")
-    public String profile(Principal principal, Model model) {
-        model.addAttribute("username", principal.getName());
-        return "profile";
+    @GetMapping("/profile/{username}")
+    public String profile(Principal principal, @PathVariable String username) {
+        if (principal.getName().equals(username)) {
+            return "profile";
+        }
+        return "readProfile";
     }
 
     @GetMapping("/settings")

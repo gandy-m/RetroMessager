@@ -51,6 +51,7 @@ async function fetchUsername() {
         throw new Error('Network response was not ok');
     }
     username = await response.text();
+    document.getElementById('profile-a').href = "/profile/" + username;
 }
 
 document.addEventListener("DOMContentLoaded", function () {
