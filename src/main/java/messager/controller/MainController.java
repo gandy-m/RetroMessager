@@ -4,7 +4,6 @@ package messager.controller;
 import lombok.RequiredArgsConstructor;
 import messager.DTO.ChatDTO;
 import messager.DTO.MessageDTO;
-import messager.DTO.UserDTO;
 import messager.mapper.ChatMapper;
 import messager.mapper.MessageMapper;
 import messager.mapper.UserMapper;
@@ -14,7 +13,6 @@ import messager.model.User;
 import messager.service.ChatService;
 import messager.service.MessageService;
 import messager.service.UserService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -27,7 +25,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Map;
 
 
 @RequiredArgsConstructor
@@ -49,16 +46,16 @@ public class MainController {
 
 
     @PostMapping("/find/{username}")
-    public ResponseEntity<UserDTO> findUser(@PathVariable String username) {
-        User user;
-        UserDTO userDTO;
-        try {
-            user = userService.find(username);
-            userDTO = UserMapper.INSTANCE.userToUserDTO(user);
-        } catch (Exception e) {
-            return null;
+    public ResponseEntity<?> findUser(@PathVariable String username, Principal principal) {
+        User user = userService.find(username);
+        if (principal.getName().equals(username)) {
+            return ResponseEntity.badRequest().body("You can't add yourself as a friend");
+        } else if (user == null) {
+            return ResponseEntity.badRequest().body("Nothing found");
+        } else {
+            return ResponseEntity.ok(UserMapper.INSTANCE.userToUserDTO(user));
         }
-        return ResponseEntity.ok(userDTO);
+
     }
 
 
@@ -68,7 +65,7 @@ public class MainController {
             Chat chat = chatService.addChat(principal.getName(), friendname);
             return ResponseEntity.ok(ChatMapper.INSTANCE.chatToChatDTO(chat));
         }
-        return null;
+        return ResponseEntity.badRequest().body("User already your friend");
     }
 
 

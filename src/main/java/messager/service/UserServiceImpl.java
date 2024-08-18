@@ -5,7 +5,6 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import messager.model.User;
 import messager.repository.UserRepository;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -42,7 +41,7 @@ public class UserServiceImpl implements UserService {
         if (user.isPresent()) {
             return user.get();
         }
-        throw new UsernameNotFoundException(username);
+        return null;
     }
 
 

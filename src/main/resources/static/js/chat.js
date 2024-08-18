@@ -57,16 +57,27 @@ function getChatList() {
 }
 
 function addChat(event) {
-    event.preventDefault()
+    event.preventDefault();
     let content = resultsSearchButton.textContent;
     let chatname = content.split('| ADD TO')[0].trim();
+
     fetch("/addchat/" + chatname, {
         method: 'POST'
     })
-        .then(response => response.json())
-        .then(chatDTO => showChat(chatDTO))
-        .catch(error => console.error('Ошибка:', error));
-    hideButton();
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                return response.text().then(text => { throw new Error(text) });
+            }
+        })
+        .then(chatDTO => {
+            showChat(chatDTO);
+            hideButton();
+        })
+        .catch(error => {
+            alert(error.message);
+        });
 }
 
 

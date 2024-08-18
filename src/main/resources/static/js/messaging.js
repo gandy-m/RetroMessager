@@ -8,6 +8,10 @@ function showMessage(messageDTO) {
     messageLi.appendChild(messageButton);
     messageUl.appendChild(messageLi);
     messageButton.innerText = messageDTO.text;
+    var newText = document.createElement('span');
+    newText.textContent = messageDTO.time;
+    newText.classList.add('time-text');
+    messageButton.appendChild(newText);
     messageButton.classList.add('messageButton');
     if (messageDTO.sender.username !== username) {
         messageLi.classList.add('messageLiLeft`');

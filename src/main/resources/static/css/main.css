@@ -201,6 +201,11 @@ body {
     transition: background-color 0.3s, color 0.3s;
 }
 
+.time-text {
+    font-size: 0.7em; /* Уменьшаем размер шрифта */
+    display: block; /* Переносим текст на новую строку */
+}
+
 .messageButton:hover {
     background-color: #000000;
     color: #ffffff;

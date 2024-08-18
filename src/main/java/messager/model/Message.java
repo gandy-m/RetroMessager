@@ -1,10 +1,15 @@
 package messager.model;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 
 @Getter
@@ -38,11 +43,14 @@ public class Message {
    private Chat chat;
 
 
-   public Message(String text, User sender, User recipient) {
-      this.text = text;
-      this.sender = sender;
-      this.recipient = recipient;
-   }
+   @DateTimeFormat(pattern = "MM-dd")
+   @JsonFormat(pattern = "MM-dd")
+   private LocalDate date;
+
+
+   @DateTimeFormat(pattern = "HH:mm")
+   @JsonFormat(pattern = "HH:mm")
+   private LocalTime time;
 
 
    public Message(String text, User sender, User recipient, Chat chat) {
@@ -50,6 +58,8 @@ public class Message {
       this.sender = sender;
       this.recipient = recipient;
       this.chat = chat;
+      date = LocalDate.now();
+      time = LocalTime.now();
    }
 
 

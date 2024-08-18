@@ -5,29 +5,37 @@ function findUser(event) {
         fetch("/find/" + request, {
             method: 'POST'
         })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => { throw new Error(text) });
+                }
+                return response.json();
+            })
             .then(userDTO => {
                 if (userDTO) {
-                    resultsSearchButton.style.display = 'block';
-                    resultsSearchButton.style.pointerEvents = 'auto';
-                    resultsSearchContainer.style.display = 'block';
-                    resultsSearchContainer.style.pointerEvents = 'auto';
-                    document.addEventListener('click', deletePopUp);
-                    resultsSearchButton.textContent = userDTO.username + " | ADD TO FRIENDS";
-                    fetch("/getChatImage/" + userDTO.username)
-                        .then(response => response.blob())
-                        .then(blob => {
-                            document.getElementById('resultSearchImage').src = URL.createObjectURL(blob)
-                            document.getElementById('resultSearchImageA').href = "/profile/" + userDTO.username;
-                        });
-                } else {
-                    resultsSearchButton.textContent = 'SEARCH ERROR';
+                    showPopUp(userDTO.username);
                 }
             })
             .catch(error => {
-                console.error('Ошибка:', error)
+                alert("Error: " + error.message);
             });
     }
+}
+
+
+function showPopUp(username) {
+    resultsSearchButton.style.display = 'block';
+    resultsSearchButton.style.pointerEvents = 'auto';
+    resultsSearchContainer.style.display = 'block';
+    resultsSearchContainer.style.pointerEvents = 'auto';
+    document.addEventListener('click', deletePopUp);
+    resultsSearchButton.textContent = username + " | ADD TO FRIENDS";
+    fetch("/getChatImage/" + username)
+        .then(response => response.blob())
+        .then(blob => {
+            document.getElementById('resultSearchImage').src = URL.createObjectURL(blob)
+            document.getElementById('resultSearchImageA').href = "/profile/" + username;
+        });
 }
 
 
