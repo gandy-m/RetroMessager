@@ -98,15 +98,60 @@ body {
     color: #ffffff;
 }
 
-.resultsSearchButton {
-    width: 100%;
-    height: 100%;
-    border: none;
-    border-radius: 20px;
-    position: static;
+.resultsSearchContainer {
+    z-index: 3;
+    top: 45px;
+    bottom: 0;
+    left: 2px;
+    width: 32%;
+    height: calc(100% - 40px);
+    margin-left: 1%;
+    position: fixed;
+    background-color: white;
     display: none;
     pointer-events: none;
-    background: #dd7f2a;
+    border-radius: 20px;
+}
+
+.resultsSearchButton {
+    border: 2px solid #000000;
+    border-radius: 20px;
+    position: absolute;
+    width: 100%;
+    height: 45px;
+    left: 0;
+    right: 0;
+    background-color: #ffffff;
+    cursor: pointer;
+    font-family: 'Courier New', Courier, monospace;
+    transition: background-color 0.3s, color 0.3s;
+    box-sizing: border-box;
+    display: none;
+    pointer-events: none;
+}
+
+.resultSearchImage {
+    z-index: 4;
+    width: 60px;
+    height: 45px;
+    border-radius: 20px;
+    border: 1px solid #000000;
+    background-color: #ffffff;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    left: 0;
+}
+.resultSearchImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.resultsSearchButton:hover {
+    background-color: #000000;
+    color: #ffffff;
 }
 
 .messageContainer {
@@ -151,7 +196,7 @@ body {
     max-width: 97%;
     white-space: normal;
     overflow: hidden;
-    text-align: right; /* Отправленное сообщение выровнено по правому краю */
+    text-align: right;
     font-family: 'Courier New', Courier, monospace;
     transition: background-color 0.3s, color 0.3s;
 }
@@ -203,16 +248,16 @@ body {
 }
 
 .friendButton {
+    z-index: 1;
     border: 2px solid #000000;
     border-radius: 20px;
     position: static;
-    width: calc(100% - 50px);
+    width: 100%;
     height: 45px;
     background-color: #ffffff;
     cursor: pointer;
     font-family: 'Courier New', Courier, monospace;
     transition: background-color 0.3s, color 0.3s;
-    padding-left: 45px;
     box-sizing: border-box;
 }
 
@@ -222,7 +267,7 @@ body {
 }
 
 .friendLi {
-    position: static;
+    position: relative;
     width: 100%;
     height: 50px;
 }
@@ -294,16 +339,17 @@ body {
 }
 
 .chat-image {
-    width: 45px;
+    z-index: 2;
+    width: 60px;
     height: 45px;
-    border-radius: 50%;
+    border-radius: 20px;
     border: 1px solid #000000;
     background-color: #ffffff;
     position: absolute;
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    right: 0;
+    left: 0;
 }
 .chat-image img {
     width: 100%;

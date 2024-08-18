@@ -2,6 +2,7 @@ let searchUserInput;
 let friendButton;
 let resultsSearchButton;
 let messageUl;
+let resultsSearchContainer;
 
 let socket;
 let stompClient;
@@ -56,6 +57,7 @@ async function fetchUsername() {
 
 document.addEventListener("DOMContentLoaded", function () {
 
+    resultsSearchContainer = document.getElementById('resultsSearchContainer');
     searchUserInput = document.getElementById('searchUserInput');
     friendButton = document.getElementById('friendButton');
     resultsSearchButton = document.getElementById('resultsSearchButton');
