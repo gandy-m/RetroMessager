@@ -14,6 +14,7 @@
             align-items: center;
             height: 100vh;
         }
+
         .container {
             background-color: #ffffff;
             padding: 20px;
@@ -22,10 +23,12 @@
             width: 300px;
             text-align: center;
         }
+
         h1 {
             text-align: center;
             margin-bottom: 20px;
         }
+
         .back-button {
             position: absolute;
             top: 10px;
@@ -40,6 +43,7 @@
             justify-content: center;
             align-items: center;
         }
+
         .back-button::before {
             content: '';
             display: inline-block;
@@ -49,12 +53,15 @@
             border-left: 2px solid #000000;
             transform: rotate(-45deg);
         }
+
         .back-button:hover {
             background-color: #000000;
         }
+
         .back-button:hover::before {
             border-color: #ffffff;
         }
+
         button {
             width: 100%;
             padding: 10px;
@@ -65,17 +72,21 @@
             transition: background-color 0.3s, color 0.3s;
             margin-bottom: 10px;
         }
+
         button:hover {
             background-color: #000000;
             color: #ffffff;
         }
+
         #fileInput {
             display: none;
         }
+
         .password-form {
             display: none;
             margin-top: 10px;
         }
+
         .password-form input {
             width: calc(100% - 24px);
             padding: 10px;
@@ -83,6 +94,7 @@
             border: 2px solid #000000;
             font-family: 'Courier New', Courier, monospace;
         }
+
         .password-form button {
             width: 100%;
         }
@@ -106,11 +118,11 @@
         window.history.back();
     }
 
-    document.getElementById('changeProfileImageButton').addEventListener('click', function() {
+    document.getElementById('changeProfileImageButton').addEventListener('click', function () {
         document.getElementById('fileInput').click();
     });
 
-    document.getElementById('fileInput').addEventListener('change', function(event) {
+    document.getElementById('fileInput').addEventListener('change', function (event) {
         const file = event.target.files[0];
         if (file) {
             const formData = new FormData();
@@ -137,7 +149,7 @@
         }
     });
 
-    document.getElementById('changePasswordButton').addEventListener('click', function() {
+    document.getElementById('changePasswordButton').addEventListener('click', function () {
         const passwordForm = document.getElementById('passwordForm');
         if (passwordForm.style.display === 'none') {
             passwordForm.style.display = 'block';
@@ -146,7 +158,7 @@
         }
     });
 
-    document.getElementById('submitPassword').addEventListener('click', function() {
+    document.getElementById('submitPassword').addEventListener('click', function () {
         const newPassword = document.getElementById('newPassword').value;
         if (newPassword) {
             fetch('/setPassword/' + newPassword, {
