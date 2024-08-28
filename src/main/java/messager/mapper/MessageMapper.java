@@ -18,17 +18,9 @@ public interface MessageMapper {
    UserDTO userToUserDTO(User user);
 
 
-   User userDTOToUser(UserDTO userDTO);
-
-
    @Mapping(source = "sender", target = "sender")
    @Mapping(source = "recipient", target = "recipient")
    MessageDTO messageToMessageDTO(Message message);
-
-
-   @Mapping(source = "sender", target = "sender")
-   @Mapping(source = "recipient", target = "recipient")
-   Message messageDTOToMessage(MessageDTO messageDTO);
 
 
 }

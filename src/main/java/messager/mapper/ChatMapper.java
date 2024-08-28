@@ -22,8 +22,6 @@ public interface ChatMapper {
    UserDTO userToUserDTO(User user);
 
 
-   User userDTOToUser(UserDTO userDTO);
-   Message messageDTOToMessage(MessageDTO messageDTO);
    MessageDTO messageToMessageDTO(Message message);
 
 
@@ -31,12 +29,5 @@ public interface ChatMapper {
    @Mapping(source = "user2", target = "user2DTO")
    @Mapping(source = "messages", target = "messages")
    ChatDTO chatToChatDTO(Chat chat);
-
-
-   @Mapping(source = "user1DTO", target = "user1")
-   @Mapping(source = "user2DTO", target = "user2")
-   @Mapping(source = "messages", target = "messages")
-   Chat chatDTOToChat(ChatDTO chatDTO);
-
 
 }
