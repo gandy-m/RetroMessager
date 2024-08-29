@@ -17,7 +17,7 @@ spring:
       max-file-size: 10MB
       max-request-size: 10MB
 server:
-  port: 1215
+  port: 1928
   servlet:
     session:
       timeout: 150m
