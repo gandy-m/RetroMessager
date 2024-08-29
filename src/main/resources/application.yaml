@@ -1,6 +1,6 @@
 spring:
   application:
-    name: springMessager
+    name: RetroMessager
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
@@ -17,7 +17,7 @@ spring:
       max-file-size: 10MB
       max-request-size: 10MB
 server:
-  port: 8080
+  port: 1215
   servlet:
     session:
       timeout: 150m
